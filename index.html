@@ -6,7 +6,9 @@
     <title>Marriage Biodata - Wasim Ahmed N</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Visualization & Content Choices: 
-        - Hero: Name, Photo. Goal: Introduction. Method: HTML/CSS, Image. Interaction: None.
+        - Hero: Name, placeholder for photo (initials). Goal: Introduction. Method: HTML/CSS. Interaction: None.
+        - Highlights: Key facts (Age, Profession, Qualification, Marital Status, Location). Goal: Quick overview/summary. Method: HTML/CSS grid with Unicode icons. Interaction: None.
+        - Photos: Main image display with left/right slider arrows. Thumbnails are hidden. Goal: Showcase multiple photos one at a time. Method: HTML/CSS, Image, JavaScript for slider navigation. Interaction: Click slider arrows to change main image; clicking the main image will open a full-screen lightbox with navigation arrows to cycle through images and a close button.
         - Personal Info: Key-value pairs with Unicode icons (👤, 🎂, 📍, 📏, ✨, 💍, ☪️, 🗣️, 🇮🇳, 🏠). Goal: Inform. Method: HTML/CSS. Interaction: None.
         - Education: Card display. Goal: Showcase qualifications. Method: HTML/CSS. Interaction: None.
         - Career: Card display. Goal: Highlight profession. Method: HTML/CSS. Interaction: None.
@@ -14,7 +16,7 @@
         - Lifestyle: Lists, Unicode icons for hobbies (📖, ✈️, 🍳, ⚽). Goal: Share personality. Method: HTML/CSS. Interaction: None.
         - Contact: Clear display with clickable email. Goal: Enable contact. Method: HTML/CSS. Interaction: `mailto:` link.
         - The "Family Type" and "Dietary Habits" fields from the source report list multiple options with slashes; these will be presented as provided to accurately reflect the source.
-        - Justification: These methods are chosen for clarity, readability, and appropriateness for textual biodata. No complex visualizations like charts are needed.
+        - Justification: These methods are chosen for clarity, readability, and appropriateness for textual biodata. The 'Highlights' section provides immediate understanding, and the 'Photos' section now offers a streamlined, single-image slider view with an optional lightbox for deeper exploration. No complex visualizations like charts are needed.
     -->
     <style>
         body {
@@ -43,14 +45,57 @@
         .detail-text span {
             @apply text-neutral-600;
         }
-        .profile-pic-container {
-            @apply w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto overflow-hidden flex items-center justify-center shadow-lg bg-gradient-to-br from-amber-200 to-emerald-200;
+        .hero-initials-placeholder {
+            @apply w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto flex items-center justify-center text-6xl text-white shadow-lg bg-gradient-to-br from-amber-200 to-emerald-200;
         }
-        .profile-pic-container img {
-            @apply w-full h-full object-cover;
+        .thumbnail-img {
+            @apply w-24 h-24 object-cover rounded-lg shadow-md cursor-pointer border-2 border-transparent hover:border-emerald-500 transition-all duration-200;
         }
-        .profile-pic-container .fallback-text {
-            @apply text-6xl text-white;
+        .thumbnail-img.active {
+            @apply border-emerald-600 ring-2 ring-emerald-300;
+        }
+
+        /* Lightbox styles */
+        .lightbox-overlay {
+            @apply fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-300;
+        }
+        .lightbox-overlay.active {
+            @apply opacity-100 pointer-events-auto;
+        }
+        .lightbox-content {
+            @apply relative max-w-full max-h-[90vh] mx-auto p-4;
+        }
+        .lightbox-content img {
+            @apply max-w-full max-h-[80vh] object-contain rounded-lg shadow-xl;
+        }
+        .lightbox-close, .lightbox-nav {
+            @apply absolute text-white text-4xl cursor-pointer p-4 transition-colors duration-200 hover:text-amber-300;
+        }
+        .lightbox-close {
+            @apply top-0 right-0;
+        }
+        .lightbox-nav.prev {
+            @apply top-1/2 left-0 -translate-y-1/2;
+        }
+        .lightbox-nav.next {
+            @apply top-1/2 right-0 -translate-y-1/2;
+        }
+        .lightbox-nav svg {
+            @apply h-10 w-10;
+        }
+
+        /* Gallery Slider Navigation */
+        .gallery-nav-btn {
+            @apply absolute top-1/2 -translate-y-1/2 bg-gray-800 bg-opacity-60 text-white p-3 rounded-full cursor-pointer hover:bg-opacity-80 transition-colors duration-200 z-10 shadow-lg;
+        }
+        .gallery-nav-btn.left {
+            @apply left-2;
+        }
+        .gallery-nav-btn.right {
+            @apply right-2;
+        }
+        .gallery-nav-btn svg {
+            @apply h-8 w-8; /* Increased size */
         }
     </style>
 </head>
@@ -65,6 +110,8 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="#hero" class="nav-link">Home</a>
+                        <a href="#highlights" class="nav-link">Highlights</a>
+                        <a href="#photos" class="nav-link">Photos</a>
                         <a href="#personal" class="nav-link">Personal</a>
                         <a href="#education" class="nav-link">Education</a>
                         <a href="#career" class="nav-link">Career</a>
@@ -89,6 +136,8 @@
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#hero" class="block nav-link text-base">Home</a>
+                <a href="#highlights" class="block nav-link text-base">Highlights</a>
+                <a href="#photos" class="block nav-link text-base">Photos</a>
                 <a href="#personal" class="block nav-link text-base">Personal</a>
                 <a href="#education" class="block nav-link text-base">Education</a>
                 <a href="#career" class="block nav-link text-base">Career</a>
@@ -101,8 +150,8 @@
 
     <header id="hero" class="bg-gradient-to-br from-amber-500 via-emerald-500 to-teal-600 text-white pt-20 pb-16 md:pt-28 md:pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="profile-pic-container mb-6">
-                <img src="https://github.com/wasimahmedn/Personal/blob/main/myimage2.jpeg" alt="Profile Photo of Wasim Ahmed N" onerror="this.onerror=null;this.src='';this.alt='Photo Not Available';this.parentNode.innerHTML='<span class=\'fallback-text\'>WA</span>';">
+            <div class="hero-initials-placeholder mb-6">
+                <span>WA</span>
             </div>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Wasim Ahmed N</h1>
             <p class="text-xl md:text-2xl text-amber-100">Seeking a compatible life partner.</p>
@@ -111,6 +160,64 @@
     </header>
 
     <main class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-12 md:space-y-16">
+        <section id="highlights" class="pt-10">
+            <h2 class="section-title">Quick Highlights</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Get a quick overview of my key personal and professional attributes at a glance.</p>
+            <div class="card max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+                    <div class="detail-item">
+                        <span class="detail-icon">🎂</span>
+                        <p class="detail-text"><strong>Age:</strong> <span>28</span></p>
+                    </div>
+                     <div class="detail-item">
+                        <span class="detail-icon">💍</span>
+                        <p class="detail-text"><strong>Marital Status:</strong> <span>Single (Separated)</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📍</span>
+                        <p class="detail-text"><strong>Location:</strong> <span>KGF, Kolar</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">👨‍💻</span>
+                        <p class="detail-text"><strong>Profession:</strong> <span>Senior Software Engineer</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎓</span>
+                        <p class="detail-text"><strong>Highest Qualification:</strong> <span>B.Tech in Computer Science</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💰</span>
+                        <p class="detail-text"><strong>Annual Income:</strong> <span>20 LPA+</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="photos" class="pt-10">
+            <h2 class="section-title">Photo Gallery</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Browse through a selection of my recent photographs using the navigation arrows.</p>
+            <div class="card max-w-3xl mx-auto">
+                <div class="relative mb-6 rounded-lg overflow-hidden shadow-lg border border-stone-200">
+                    <img id="main-photo" src="https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage1.jpeg" alt="Main Profile Photo" class="w-full h-auto object-cover max-h-[500px] cursor-pointer"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/FFD700/FFFFFF?text=Image+Not+Available';this.alt='Image Not Available';">
+                    
+                    <button id="gallery-prev" class="gallery-nav-btn left">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button id="gallery-next" class="gallery-nav-btn right">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="thumbnails-container" class="flex flex-wrap justify-center gap-4 hidden"
+                     data-images='["https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage1.jpeg", "https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage2.jpeg"]'>
+                    </div>
+            </div>
+        </section>
+
         <section id="personal" class="pt-10">
             <h2 class="section-title">Personal Information</h2>
              <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">This section outlines my fundamental personal details, offering a glimpse into who I am, including my background and key identifying information relevant for matrimonial considerations.</p>
@@ -294,6 +401,23 @@
         <p class="text-sm mt-1">Designed to present biodata information clearly.</p>
     </footer>
 
+    <div id="lightbox-overlay" class="lightbox-overlay">
+        <div class="lightbox-content">
+            <span id="lightbox-close" class="lightbox-close">&times;</span>
+            <img id="lightbox-image" src="" alt="Gallery Image">
+            <span id="lightbox-prev" class="lightbox-nav prev">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </span>
+            <span id="lightbox-next" class="lightbox-nav next">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </span>
+        </div>
+    </div>
+
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -329,6 +453,103 @@
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
         }, false);
 
+        // Photo Gallery and Lightbox Logic
+        const mainPhoto = document.getElementById('main-photo');
+        const thumbnailsContainer = document.getElementById('thumbnails-container');
+        const imageUrls = JSON.parse(thumbnailsContainer.dataset.images);
+        // Removed direct reference to thumbnails as they are now hidden by default
+        // const thumbnails = thumbnailsContainer.querySelectorAll('.thumbnail-img');
+
+        const galleryPrevBtn = document.getElementById('gallery-prev');
+        const galleryNextBtn = document.getElementById('gallery-next');
+
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+
+        let currentImageIndex = 0; // For both inline gallery and lightbox
+
+        function updateMainPhoto(index) {
+            mainPhoto.src = imageUrls[index];
+            // No need to manage active class on thumbnails since they are hidden
+            currentImageIndex = index;
+        }
+
+        function showNextImage() {
+            updateMainPhoto((currentImageIndex + 1) % imageUrls.length);
+        }
+
+        function showPrevImage() {
+            updateMainPhoto((currentImageIndex - 1 + imageUrls.length) % imageUrls.length);
+        }
+
+        function openLightbox(index) {
+            currentImageIndex = index; // Ensure lightbox index matches current gallery index
+            lightboxImage.src = imageUrls[currentImageIndex];
+            lightboxOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+        }
+
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Removed event listeners for thumbnails as they are now hidden
+        // thumbnails.forEach(thumbnail => {
+        //     thumbnail.addEventListener('click', function() {
+        //         const index = parseInt(this.dataset.index);
+        //         updateMainPhoto(index); // Update main photo and active thumbnail
+        //         openLightbox(index); // Open lightbox
+        //     });
+        // });
+
+        // Event listener for main photo to open lightbox
+        mainPhoto.addEventListener('click', () => {
+            openLightbox(currentImageIndex); // Open current main photo in lightbox
+        });
+
+        // Gallery slider controls
+        galleryPrevBtn.addEventListener('click', showPrevImage);
+        galleryNextBtn.addEventListener('click', showNextImage);
+
+        // Lightbox controls
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxPrev.addEventListener('click', () => {
+            showPrevImage(); // Update main photo in gallery
+            lightboxImage.src = imageUrls[currentImageIndex]; // Update lightbox image
+        });
+        lightboxNext.addEventListener('click', () => {
+            showNextImage(); // Update main photo in gallery
+            lightboxImage.src = imageUrls[currentImageIndex]; // Update lightbox image
+        });
+
+        // Close lightbox on overlay click (but not on image itself)
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (lightboxOverlay.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                    lightboxImage.src = imageUrls[currentImageIndex];
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                    lightboxImage.src = imageUrls[currentImageIndex];
+                }
+            }
+        });
+
+        // Initialize the first image as active
+        updateMainPhoto(0);
     </script>
 </body>
 </html>
