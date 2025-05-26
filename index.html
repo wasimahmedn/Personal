@@ -8,7 +8,7 @@
     <!-- Visualization & Content Choices: 
         - Hero: Name, placeholder for photo (initials). Goal: Introduction. Method: HTML/CSS. Interaction: None.
         - Highlights: Key facts (Age, Profession, Qualification, Marital Status, Location). Goal: Quick overview/summary. Method: HTML/CSS grid with Unicode icons. Interaction: None.
-        - Photos: Main image display with left/right slider arrows. Thumbnails are hidden. Goal: Showcase multiple photos one at a time. Method: HTML/CSS, Image, JavaScript for slider navigation. Interaction: Click slider arrows to change main image; clicking the main image will open a full-screen lightbox with navigation arrows to cycle through images and a close button.
+        - Photos: Displays all images as a grid of clickable thumbnails. Clicking a thumbnail opens the full image in a new tab. Goal: Showcase multiple photos in a simple, reliable gallery. Method: HTML/CSS, Image, simple JavaScript for dynamic thumbnail creation. Interaction: Click thumbnail to open image in new tab.
         - Personal Info: Key-value pairs with Unicode icons (👤, 🎂, 📍, 📏, ✨, 💍, ☪️, 🗣️, 🇮🇳, 🏠). Goal: Inform. Method: HTML/CSS. Interaction: None.
         - Education: Card display. Goal: Showcase qualifications. Method: HTML/CSS. Interaction: None.
         - Career: Card display. Goal: Highlight profession. Method: HTML/CSS. Interaction: None.
@@ -16,7 +16,7 @@
         - Lifestyle: Lists, Unicode icons for hobbies (📖, ✈️, 🍳, ⚽). Goal: Share personality. Method: HTML/CSS. Interaction: None.
         - Contact: Clear display with clickable email. Goal: Enable contact. Method: HTML/CSS. Interaction: `mailto:` link.
         - The "Family Type" and "Dietary Habits" fields from the source report list multiple options with slashes; these will be presented as provided to accurately reflect the source.
-        - Justification: These methods are chosen for clarity, readability, and appropriateness for textual biodata. The 'Highlights' section provides immediate understanding, and the 'Photos' section now offers a streamlined, single-image slider view with an optional lightbox for deeper exploration. No complex visualizations like charts are needed.
+        - Justification: These methods are chosen for clarity, readability, and appropriateness for textual biodata. The 'Highlights' section provides immediate understanding, and the 'Photos' section now offers a highly reliable, simple grid view for images, avoiding any potential JavaScript conflicts. No complex visualizations like charts are needed.
     -->
     <style>
         body {
@@ -48,54 +48,8 @@
         .hero-initials-placeholder {
             @apply w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto flex items-center justify-center text-6xl text-white shadow-lg bg-gradient-to-br from-amber-200 to-emerald-200;
         }
-        .thumbnail-img {
-            @apply w-24 h-24 object-cover rounded-lg shadow-md cursor-pointer border-2 border-transparent hover:border-emerald-500 transition-all duration-200;
-        }
-        .thumbnail-img.active {
-            @apply border-emerald-600 ring-2 ring-emerald-300;
-        }
-
-        /* Lightbox styles */
-        .lightbox-overlay {
-            @apply fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-300;
-        }
-        .lightbox-overlay.active {
-            @apply opacity-100 pointer-events-auto;
-        }
-        .lightbox-content {
-            @apply relative max-w-full max-h-[90vh] mx-auto p-4;
-        }
-        .lightbox-content img {
-            @apply max-w-full max-h-[80vh] object-contain rounded-lg shadow-xl;
-        }
-        .lightbox-close, .lightbox-nav {
-            @apply absolute text-white text-4xl cursor-pointer p-4 transition-colors duration-200 hover:text-amber-300;
-        }
-        .lightbox-close {
-            @apply top-0 right-0;
-        }
-        .lightbox-nav.prev {
-            @apply top-1/2 left-0 -translate-y-1/2;
-        }
-        .lightbox-nav.next {
-            @apply top-1/2 right-0 -translate-y-1/2;
-        }
-        .lightbox-nav svg {
-            @apply h-10 w-10;
-        }
-
-        /* Gallery Slider Navigation */
-        .gallery-nav-btn {
-            @apply absolute top-1/2 -translate-y-1/2 bg-gray-800 bg-opacity-60 text-white p-3 rounded-full cursor-pointer hover:bg-opacity-80 transition-colors duration-200 z-10 shadow-lg;
-        }
-        .gallery-nav-btn.left {
-            @apply left-2;
-        }
-        .gallery-nav-btn.right {
-            @apply right-2;
-        }
-        .gallery-nav-btn svg {
-            @apply h-8 w-8; /* Increased size */
+        .gallery-thumbnail {
+            @apply w-32 h-32 object-cover rounded-lg shadow-md cursor-pointer border-2 border-transparent hover:border-emerald-500 transition-all duration-200;
         }
     </style>
 </head>
@@ -195,24 +149,9 @@
 
         <section id="photos" class="pt-10">
             <h2 class="section-title">Photo Gallery</h2>
-            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Browse through a selection of my recent photographs using the navigation arrows.</p>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Click any image to view it in full size.</p>
             <div class="card max-w-3xl mx-auto">
-                <div class="relative mb-6 rounded-lg overflow-hidden shadow-lg border border-stone-200">
-                    <img id="main-photo" src="https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage1.jpeg" alt="Main Profile Photo" class="w-full h-auto object-cover max-h-[500px] cursor-pointer"
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/FFD700/FFFFFF?text=Image+Not+Available';this.alt='Image Not Available';">
-                    
-                    <button id="gallery-prev" class="gallery-nav-btn left">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button id="gallery-next" class="gallery-nav-btn right">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-                <div id="thumbnails-container" class="flex flex-wrap justify-center gap-4 hidden"
+                <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-items-center"
                      data-images='["https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage1.jpeg", "https://raw.githubusercontent.com/wasimahmedn/Personal/main/myimage2.jpeg"]'>
                     </div>
             </div>
@@ -401,23 +340,6 @@
         <p class="text-sm mt-1">Designed to present biodata information clearly.</p>
     </footer>
 
-    <div id="lightbox-overlay" class="lightbox-overlay">
-        <div class="lightbox-content">
-            <span id="lightbox-close" class="lightbox-close">&times;</span>
-            <img id="lightbox-image" src="" alt="Gallery Image">
-            <span id="lightbox-prev" class="lightbox-nav prev">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </span>
-            <span id="lightbox-next" class="lightbox-nav next">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </span>
-        </div>
-    </div>
-
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -453,103 +375,45 @@
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
         }, false);
 
-        // Photo Gallery and Lightbox Logic
-        const mainPhoto = document.getElementById('main-photo');
-        const thumbnailsContainer = document.getElementById('thumbnails-container');
-        const imageUrls = JSON.parse(thumbnailsContainer.dataset.images);
-        // Removed direct reference to thumbnails as they are now hidden by default
-        // const thumbnails = thumbnailsContainer.querySelectorAll('.thumbnail-img');
+        // Photo Gallery Grid Logic
+        const galleryGrid = document.getElementById('gallery-grid');
+        let imageUrls = []; 
 
-        const galleryPrevBtn = document.getElementById('gallery-prev');
-        const galleryNextBtn = document.getElementById('gallery-next');
-
-        const lightboxOverlay = document.getElementById('lightbox-overlay');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const lightboxClose = document.getElementById('lightbox-close');
-        const lightboxPrev = document.getElementById('lightbox-prev');
-        const lightboxNext = document.getElementById('lightbox-next');
-
-        let currentImageIndex = 0; // For both inline gallery and lightbox
-
-        function updateMainPhoto(index) {
-            mainPhoto.src = imageUrls[index];
-            // No need to manage active class on thumbnails since they are hidden
-            currentImageIndex = index;
-        }
-
-        function showNextImage() {
-            updateMainPhoto((currentImageIndex + 1) % imageUrls.length);
-        }
-
-        function showPrevImage() {
-            updateMainPhoto((currentImageIndex - 1 + imageUrls.length) % imageUrls.length);
-        }
-
-        function openLightbox(index) {
-            currentImageIndex = index; // Ensure lightbox index matches current gallery index
-            lightboxImage.src = imageUrls[currentImageIndex];
-            lightboxOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
-        }
-
-        function closeLightbox() {
-            lightboxOverlay.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
-        }
-
-        // Removed event listeners for thumbnails as they are now hidden
-        // thumbnails.forEach(thumbnail => {
-        //     thumbnail.addEventListener('click', function() {
-        //         const index = parseInt(this.dataset.index);
-        //         updateMainPhoto(index); // Update main photo and active thumbnail
-        //         openLightbox(index); // Open lightbox
-        //     });
-        // });
-
-        // Event listener for main photo to open lightbox
-        mainPhoto.addEventListener('click', () => {
-            openLightbox(currentImageIndex); // Open current main photo in lightbox
-        });
-
-        // Gallery slider controls
-        galleryPrevBtn.addEventListener('click', showPrevImage);
-        galleryNextBtn.addEventListener('click', showNextImage);
-
-        // Lightbox controls
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightboxPrev.addEventListener('click', () => {
-            showPrevImage(); // Update main photo in gallery
-            lightboxImage.src = imageUrls[currentImageIndex]; // Update lightbox image
-        });
-        lightboxNext.addEventListener('click', () => {
-            showNextImage(); // Update main photo in gallery
-            lightboxImage.src = imageUrls[currentImageIndex]; // Update lightbox image
-        });
-
-        // Close lightbox on overlay click (but not on image itself)
-        lightboxOverlay.addEventListener('click', (e) => {
-            if (e.target === lightboxOverlay) {
-                closeLightbox();
+        try {
+            const imagesData = galleryGrid.dataset.images;
+            if (imagesData) {
+                imageUrls = JSON.parse(imagesData);
+            } else {
+                console.warn("data-images attribute is empty or not found on gallery-grid.");
             }
-        });
+        } catch (e) {
+            console.error("Error parsing image URLs from data-images attribute:", e);
+            imageUrls = ["https://placehold.co/300x300/FFD700/FFFFFF?text=Error"]; // Fallback
+        }
 
-        // Keyboard navigation for lightbox
-        document.addEventListener('keydown', (e) => {
-            if (lightboxOverlay.classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                } else if (e.key === 'ArrowRight') {
-                    showNextImage();
-                    lightboxImage.src = imageUrls[currentImageIndex];
-                } else if (e.key === 'ArrowLeft') {
-                    showPrevImage();
-                    lightboxImage.src = imageUrls[currentImageIndex];
-                }
-            }
-        });
+        // Dynamically create image elements for the gallery grid
+        if (galleryGrid) {
+            galleryGrid.innerHTML = ''; // Clear existing content
+            imageUrls.forEach((url, index) => {
+                const imgLink = document.createElement('a');
+                imgLink.href = url;
+                imgLink.target = "_blank"; // Open in new tab
+                imgLink.rel = "noopener noreferrer"; // Security best practice
 
-        // Initialize the first image as active
-        updateMainPhoto(0);
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Gallery Image ${index + 1}`;
+                img.classList.add('gallery-thumbnail');
+                img.onerror = function() {
+                    this.onerror = null;
+                    this.src = 'https://placehold.co/300x300/FFD700/FFFFFF?text=NA';
+                    this.alt = 'Image Not Available';
+                };
+
+                imgLink.appendChild(img);
+                galleryGrid.appendChild(imgLink);
+            });
+        }
     </script>
 </body>
 </html>
