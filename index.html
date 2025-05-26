@@ -6,7 +6,7 @@
     <title>Marriage Biodata - Wasim Ahmed N</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Visualization & Content Choices: 
-        - Hero: Name, Placeholder for photo. Goal: Introduction. Method: HTML/CSS. Interaction: None.
+        - Hero: Name, Photo. Goal: Introduction. Method: HTML/CSS, Image. Interaction: None.
         - Personal Info: Key-value pairs with Unicode icons (👤, 🎂, 📍, 📏, ✨, 💍, ☪️, 🗣️, 🇮🇳, 🏠). Goal: Inform. Method: HTML/CSS. Interaction: None.
         - Education: Card display. Goal: Showcase qualifications. Method: HTML/CSS. Interaction: None.
         - Career: Card display. Goal: Highlight profession. Method: HTML/CSS. Interaction: None.
@@ -43,8 +43,14 @@
         .detail-text span {
             @apply text-neutral-600;
         }
-        .profile-pic-placeholder {
-            @apply w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-amber-200 to-emerald-200 rounded-full mx-auto flex items-center justify-center text-6xl text-white shadow-lg;
+        .profile-pic-container {
+            @apply w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto overflow-hidden flex items-center justify-center shadow-lg bg-gradient-to-br from-amber-200 to-emerald-200;
+        }
+        .profile-pic-container img {
+            @apply w-full h-full object-cover;
+        }
+        .profile-pic-container .fallback-text {
+            @apply text-6xl text-white;
         }
     </style>
 </head>
@@ -95,8 +101,8 @@
 
     <header id="hero" class="bg-gradient-to-br from-amber-500 via-emerald-500 to-teal-600 text-white pt-20 pb-16 md:pt-28 md:pb-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="profile-pic-placeholder mb-6">
-                <span>WA</span>
+            <div class="profile-pic-container mb-6">
+                <img src="https://placehold.co/192x192/FFD700/FFFFFF?text=Your+Photo" alt="Profile Photo of Wasim Ahmed N" onerror="this.onerror=null;this.src='';this.alt='Photo Not Available';this.parentNode.innerHTML='<span class=\'fallback-text\'>WA</span>';">
             </div>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Wasim Ahmed N</h1>
             <p class="text-xl md:text-2xl text-amber-100">Seeking a compatible life partner.</p>
