@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Biodata - Wasim Ahmed N</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Visualization & Content Choices: 
+        - Hero: Name, Placeholder for photo. Goal: Introduction. Method: HTML/CSS. Interaction: None.
+        - Personal Info: Key-value pairs with Unicode icons (👤, 🎂, 📍, 📏, ✨, 💍, ☪️, 🗣️, 🇮🇳, 🏠). Goal: Inform. Method: HTML/CSS. Interaction: None.
+        - Education: Card display. Goal: Showcase qualifications. Method: HTML/CSS. Interaction: None.
+        - Career: Card display. Goal: Highlight profession. Method: HTML/CSS. Interaction: None.
+        - Family: Structured list. Goal: Provide family context. Method: HTML/CSS. Interaction: None.
+        - Lifestyle: Lists, Unicode icons for hobbies (📖, ✈️, 🍳, ⚽). Goal: Share personality. Method: HTML/CSS. Interaction: None.
+        - Contact: Clear display with clickable email. Goal: Enable contact. Method: HTML/CSS. Interaction: `mailto:` link.
+        - The "Family Type" and "Dietary Habits" fields from the source report list multiple options with slashes; these will be presented as provided to accurately reflect the source.
+        - Justification: These methods are chosen for clarity, readability, and appropriateness for textual biodata. No complex visualizations like charts are needed.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Assuming Inter is a preferred font, fallback to sans-serif */
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        .nav-link {
+            @apply px-3 py-2 rounded-md text-sm font-medium text-neutral-700 hover:bg-amber-100 hover:text-amber-700 transition-colors;
+        }
+        .section-title {
+            @apply text-3xl font-bold text-amber-700 mb-6 text-center;
+        }
+        .card {
+            @apply bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300;
+        }
+        .detail-item {
+            @apply flex items-start space-x-3 py-2;
+        }
+        .detail-icon {
+            @apply text-emerald-600 text-xl mt-1;
+        }
+        .detail-text strong {
+            @apply font-semibold text-neutral-700;
+        }
+        .detail-text span {
+            @apply text-neutral-600;
+        }
+        .profile-pic-placeholder {
+            @apply w-40 h-40 md:w-48 md:h-48 bg-gradient-to-br from-amber-200 to-emerald-200 rounded-full mx-auto flex items-center justify-center text-6xl text-white shadow-lg;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-neutral-800 antialiased">
+
+    <nav id="navbar" class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-amber-700">Wasim Ahmed N</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#hero" class="nav-link">Home</a>
+                        <a href="#personal" class="nav-link">Personal</a>
+                        <a href="#education" class="nav-link">Education</a>
+                        <a href="#career" class="nav-link">Career</a>
+                        <a href="#family" class="nav-link">Family</a>
+                        <a href="#lifestyle" class="nav-link">Lifestyle</a>
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-neutral-500 hover:text-amber-700 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hero" class="block nav-link text-base">Home</a>
+                <a href="#personal" class="block nav-link text-base">Personal</a>
+                <a href="#education" class="block nav-link text-base">Education</a>
+                <a href="#career" class="block nav-link text-base">Career</a>
+                <a href="#family" class="block nav-link text-base">Family</a>
+                <a href="#lifestyle" class="block nav-link text-base">Lifestyle</a>
+                <a href="#contact" class="block nav-link text-base">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero" class="bg-gradient-to-br from-amber-500 via-emerald-500 to-teal-600 text-white pt-20 pb-16 md:pt-28 md:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="profile-pic-placeholder mb-6">
+                <span>WA</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Wasim Ahmed N</h1>
+            <p class="text-xl md:text-2xl text-amber-100">Seeking a compatible life partner.</p>
+            <p class="mt-4 text-lg text-stone-200 max-w-2xl mx-auto">This biodata provides an overview of my personal, educational, professional, and family background. I believe in open communication and mutual respect as foundations for a strong relationship.</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-12 md:space-y-16">
+        <section id="personal" class="pt-10">
+            <h2 class="section-title">Personal Information</h2>
+             <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">This section outlines my fundamental personal details, offering a glimpse into who I am, including my background and key identifying information relevant for matrimonial considerations.</p>
+            <div class="card max-w-3xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                    <div class="detail-item">
+                        <span class="detail-icon">👤</span>
+                        <p class="detail-text"><strong>Full Name:</strong> <span>Wasim Ahmed N</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎂</span>
+                        <p class="detail-text"><strong>Date of Birth:</strong> <span>10/11/1995</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📍</span>
+                        <p class="detail-text"><strong>Place of Birth:</strong> <span>KGF, Kolar</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📏</span>
+                        <p class="detail-text"><strong>Height:</strong> <span>5’ 10’’</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">✨</span>
+                        <p class="detail-text"><strong>Complexion:</strong> <span>Fair</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💍</span>
+                        <p class="detail-text"><strong>Marital Status:</strong> <span>Single (Separated)</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">☪️</span>
+                        <p class="detail-text"><strong>Religion:</strong> <span>Islam</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🗣️</span>
+                        <p class="detail-text"><strong>Mother Tongue:</strong> <span>Urdu</span></p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🇮🇳</span>
+                        <p class="detail-text"><strong>Nationality:</strong> <span>Indian</span></p>
+                    </div>
+                    <div class="detail-item md:col-span-2">
+                        <span class="detail-icon">🏠</span>
+                        <p class="detail-text"><strong>Current Address:</strong> <span>Nayanahalli village, Bethamanagala Hobli, KGF Taluku, Kolar 563116</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="pt-10">
+            <h2 class="section-title">Educational Background</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Here, you'll find details about my academic qualifications, including my highest degree, the institution I attended, and when I completed my studies. This reflects my educational foundation.</p>
+            <div class="max-w-2xl mx-auto">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-amber-600 mb-2">B.Tech in Computer Science</h3>
+                    <p class="text-neutral-700 mb-1"><strong>Institution:</strong> VTU / Sit M Vishveswarayya Institute of Technology, Bangalore</p>
+                    <p class="text-neutral-600"><strong>Year of Completion:</strong> 2017</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="career" class="pt-10">
+            <h2 class="section-title">Professional Details</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">This section covers my professional journey, including my current occupation, the industry I work in, my role, income level, and years of experience in the field.</p>
+            <div class="max-w-2xl mx-auto">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-amber-600 mb-2">Senior Software Engineer</h3>
+                    <p class="text-neutral-700 mb-1"><strong>Company:</strong> Micron Technology (Semiconductor industry)</p>
+                    <p class="text-neutral-700 mb-1"><strong>Annual Income:</strong> 20 LPA+</p>
+                    <p class="text-neutral-600"><strong>Work Experience:</strong> 7 years</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="family" class="pt-10">
+            <h2 class="section-title">Family Details</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">Information about my immediate family is presented here, including details about my parents and siblings, our family type, and a brief overview of our family's values and background.</p>
+            <div class="card max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <div class="detail-item">
+                        <span class="detail-icon">👨‍👩‍👧‍👦</span>
+                        <p class="detail-text"><strong>Father's Name:</strong> <span>Shaik Nazeer Ahmed</span></p>
+                    </div>
+                    <p class="ml-10 text-neutral-600 text-sm"><strong>Occupation:</strong> Agriculture and seasonal Business, UAE return.</p>
+                    
+                    <div class="detail-item">
+                         <span class="detail-icon"></span>
+                        <p class="detail-text"><strong>Mother's Name:</strong> <span>Afroz Begum</span></p>
+                    </div>
+                     <p class="ml-10 text-neutral-600 text-sm"><strong>Occupation:</strong> Homemaker</p>
+
+                    <div class="detail-item">
+                         <span class="detail-icon"></span>
+                        <p class="detail-text"><strong>Siblings:</strong> <span>1 Younger Brother (Unmarried)</span></p>
+                    </div>
+                    <div class="detail-item">
+                         <span class="detail-icon"></span>
+                        <p class="detail-text"><strong>Family Type:</strong> <span>Nuclear Family / Joint Family</span></p>
+                    </div>
+                    <div class="detail-item">
+                         <span class="detail-icon"></span>
+                        <div>
+                            <p class="detail-text"><strong>Brief Family Background:</strong></p>
+                            <blockquote class="mt-1 pl-4 border-l-4 border-amber-500 text-neutral-600 italic">
+                                "We are a close-knit family with strong traditional values, believing in mutual respect and support."
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lifestyle" class="pt-10">
+            <h2 class="section-title">Lifestyle & Interests</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">This part shares insights into my personal life, including my hobbies, personality traits, dietary preferences, and habits. It also outlines what I am looking for in a life partner.</p>
+            <div class="card max-w-3xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-amber-600 mb-2">Hobbies & Interests</h4>
+                        <ul class="list-none space-y-1">
+                            <li class="flex items-center"><span class="detail-icon mr-2">📖</span><span>Reading</span></li>
+                            <li class="flex items-center"><span class="detail-icon mr-2">✈️</span><span>Traveling</span></li>
+                            <li class="flex items-center"><span class="detail-icon mr-2">🍳</span><span>Cooking</span></li>
+                            <li class="flex items-center"><span class="detail-icon mr-2">⚽</span><span>Sports</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-amber-600 mb-2">Personality Traits</h4>
+                        <p class="text-neutral-600">Ambitious, Optimistic, Calm, Outgoing, Family-oriented, Empathetic</p>
+                    </div>
+                    <div class="md:col-span-2">
+                         <hr class="my-4 border-stone-200">
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-amber-600 mb-2">Dietary Habits</h4>
+                        <p class="text-neutral-600">Vegetarian / Non-Vegetarian / Eggetarian</p>
+                    </div>
+                     <div>
+                        <h4 class="text-lg font-semibold text-amber-600 mb-2">Habits</h4>
+                        <p class="text-neutral-600"><strong>Smoking:</strong> Does not smoke</p>
+                        <p class="text-neutral-600"><strong>Drinking:</strong> Does not drink</p>
+                    </div>
+                     <div class="md:col-span-2">
+                         <hr class="my-4 border-stone-200">
+                    </div>
+                    <div class="md:col-span-2">
+                        <h4 class="text-lg font-semibold text-amber-600 mb-2">Expectations from Partner</h4>
+                        <blockquote class="mt-1 pl-4 border-l-4 border-emerald-500 text-neutral-600 italic">
+                           "Seeking an understanding, respectful, and supportive partner who values family and has a positive outlook on life."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="pt-10 pb-16">
+            <h2 class="section-title">Contact Information</h2>
+            <p class="text-center text-neutral-600 mb-10 max-w-2xl mx-auto">If you wish to get in touch or require further information, my contact details are provided below. I look forward to hearing from prospective alliances.</p>
+            <div class="card max-w-md mx-auto text-center">
+                <div class="space-y-3">
+                    <p class="text-lg">
+                        <strong class="text-neutral-700">Mobile:</strong> 
+                        <a href="tel:9901478673" class="text-emerald-600 hover:text-emerald-700 hover:underline">9901478673</a>
+                    </p>
+                    <p class="text-lg">
+                        <strong class="text-neutral-700">Email:</strong> 
+                        <a href="mailto:wasimahmedn@gmail.com" class="text-emerald-600 hover:text-emerald-700 hover:underline">wasimahmedn@gmail.com</a>
+                    </p>
+                </div>
+                 <div class="mt-8">
+                    <a href="mailto:wasimahmedn@gmail.com?subject=Marriage Biodata Inquiry - Wasim Ahmed N" class="inline-block bg-emerald-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-emerald-700 transition-colors shadow-md hover:shadow-lg">
+                        Send Email Inquiry
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-neutral-800 text-neutral-300 py-8 text-center">
+        <p>&copy; <span id="currentYear"></span> Wasim Ahmed N. All Rights Reserved.</p>
+        <p class="text-sm mt-1">Designed to present biodata information clearly.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = mobileMenu.querySelectorAll('a');
+
+        menuButton.addEventListener('click', () => {
+            const expanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+            menuButton.setAttribute('aria-expanded', !expanded);
+            mobileMenu.classList.toggle('hidden');
+            menuButton.querySelectorAll('svg').forEach(s => s.classList.toggle('hidden'));
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuButton.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.add('hidden');
+                menuButton.querySelectorAll('svg')[0].classList.remove('hidden');
+                menuButton.querySelectorAll('svg')[1].classList.add('hidden');
+            });
+        });
+
+        const navbar = document.getElementById('navbar');
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 80) { 
+                navbar.style.top = '-80px'; 
+            } else {
+                navbar.style.top = '0';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+        }, false);
+
+    </script>
+</body>
+</html>
